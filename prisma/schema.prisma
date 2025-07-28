@@ -32,7 +32,7 @@ model Project {
   name           String
   key            String
   description    String?
-  organizationId String    // This will store the Clerk organization ID
+  organizationId String    
   sprints        Sprint[]
   issues         Issue[]
   createdAt      DateTime @default(now())
