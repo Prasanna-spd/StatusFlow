@@ -8,8 +8,7 @@ export const projectSchema = z.object({
   description: z.string().max(500, "Project description must be 500 characters or less").optional(),
 });
 
-
-export const sprintSchema=z.object({
+export const sprintSchema = z.object({
   name: z.string().min(1, "Sprint Name is requied"),
   startDate: z.date(),
   endDate: z.date(),
@@ -17,4 +16,14 @@ export const sprintSchema=z.object({
     from: z.date(),
     to: z.date(),
   }),
-})
+});
+
+export const issueSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+
+  assigneeId: z.string().cuid("Please select assignee"),
+
+  description: z.string().optional(),
+
+  priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]),
+});
