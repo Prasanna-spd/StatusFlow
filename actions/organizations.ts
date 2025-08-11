@@ -66,69 +66,69 @@ export async function getProjects(orgId) {
   return projects;
 }
 
-// export async function getUserIssues(userId) {
-//   const { orgId } = auth();
+export async function getUserIssues(userId) {
+  const { orgId } = auth();
 
-//   if (!userId || !orgId) {
-//     throw new Error("No user id or organization id found");
-//   }
+  if (!userId || !orgId) {
+    throw new Error("No user id or organization id found");
+  }
 
-//   const user = await prisma.user.findUnique({
-//     where: { clerkUserId: userId },
-//   });
+  const user = await prisma.user.findUnique({
+    where: { clerkUserId: userId },
+  });
 
-//   if (!user) {
-//     throw new Error("User not found");
-//   }
+  if (!user) {
+    throw new Error("User not found");
+  }
 
-//   const issues = await prisma.issue.findMany({
-//     where: {
-//       OR: [{ assigneeId: user.id }, { reporterId: user.id }],
-//       project: {
-//         organizationId: orgId,
-//       },
-//     },
-//     include: {
-//       project: true,
-//       assignee: true,
-//       reporter: true,
-//     },
-//     orderBy: { updatedAt: "desc" },
-//   });
+  const issues = await prisma.issue.findMany({
+    where: {
+      OR: [{ assigneeId: user.id }, { reporterId: user.id }],
+      project: {
+        organizationId: orgId,
+      },
+    },
+    include: {
+      project: true,
+      assignee: true,
+      reporter: true,
+    },
+    orderBy: { updatedAt: "desc" },
+  });
 
-//   return issues;
-// }
+  return issues;
+}
 
-// export async function getOrganizationUsers(orgId) {
-//   const { userId } = auth();
-//   if (!userId) {
-//     throw new Error("Unauthorized");
-//   }
+export async function getOrganizationUsers(orgId) {
+  const { userId } = auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
 
-//   const user = await prisma.user.findUnique({
-//     where: { clerkUserId: userId },
-//   });
+  const user = await prisma.user.findUnique({
+    where: { clerkUserId: userId },
+  });
 
-//   if (!user) {
-//     throw new Error("User not found");
-//   }
+  if (!user) {
+    throw new Error("User not found");
+  }
 
-//   const organizationMemberships =
-//     await clerkClient().organizations.getOrganizationMembershipList({
-//       organizationId: orgId,
-//     });
+  const organizationMemberships =
+    await clerkClient().organizations.getOrganizationMembershipList({
+      organizationId: orgId,
+    });
 
-//   const userIds = organizationMemberships.data.map(
-//     (membership) => membership.publicUserData.userId
-//   );
+  const userIds = organizationMemberships.data.map(
+    (membership) => membership.publicUserData?.userId
+  );
 
-//   const users = await prisma.user.findMany({
-//     where: {
-//       clerkUserId: {
-//         in: userIds,
-//       },
-//     },
-//   });
+  const users = await prisma.user.findMany({
+    where: {
+      clerkUserId: {
+        in: userIds.filter((id): id is string => typeof id === "string"),
+      },
+    },
+  });
 
-//   return users;
-// }
+  return users;
+}
