@@ -12,7 +12,9 @@ const useFetch = (cb: (...args: any[]) => Promise<any>) => {
 
     try {
       const response = await cb(...args);
+      
       setData(response);
+      return response
     } catch (err: any) {
       setError(err);
       toast.error(err.message);
