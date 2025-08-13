@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
 import IssueDetailsDialog from "./issue-details-dialog";
-import UserAvatar from "@/public/user-avatar.png";
+import UserAvatar from "./user-avatar";
 import { useRouter } from "next/navigation";
 
 const priorityColor = {
