@@ -67,7 +67,7 @@ export default function SprintCreationForm({ projectTitle, projectKey, projectId
             <form onSubmit={handleSubmit(onSubmit)} className="flex gap-4 items-end">
               <div className="flex-1">
                 <label htmlFor="name" className="block text-sm font-medium mb-1">
-                  Sprint Name
+                  Sprint Name and title
                 </label>
                 <Input id="name" {...register("name")} readOnly className="bg-slate-950" />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
